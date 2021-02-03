@@ -6,6 +6,11 @@
     <title>Birdwatching Club Address App</title>
 </head>
 <body>
-    <h1>Birdwatching Club Address App</h1>
+    <div>
+        <h1>Birdwatching Club Address App</h1>
+    </div>
+    <form method="get" action="index.php">
+    <input type="address">
+    </form>
 </body>
 </html>
