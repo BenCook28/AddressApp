@@ -9,8 +9,11 @@
     <div>
         <h1>Birdwatching Club Address App</h1>
     </div>
-    <form method="get" action="index.php">
-    <input type="address">
+    <form method="post" action="index.php">
+    <label>Enter address</label><br><br>
+    <input type="address"/>
+    <br><br>
+    <input type="submit" name="submit" value="Submit"/>
     </form>
 </body>
 </html>
