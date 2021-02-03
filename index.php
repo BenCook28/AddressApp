@@ -92,9 +92,8 @@
             $city = $_Get["city"];
             $state = $_Get["state"];
             $zip = $_Get["zip"];
-        }
 
-        $request_doc_template = <<<EOT
+            $request_doc_template = <<<EOT
         <?xml version="1.0"?>
         <AddressValidateRequest USERID="812SYLIS7409">
             <Revision>1</Revision>
@@ -112,6 +111,20 @@
         $doc_string = preg_replace('/[\t\n]/', '', $request_doc_template);
         $doc_string = urlencode($doc_string);
         $url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=". $doc_string;
+
+        $response = file_get_contents($url);
+
+        $xml=simplexml_load_string($response) or die("Error: Cannot create object");
+        print_r($xml);
+
+        echo "Address1: " . $xml->Address->Address1 . "\n";
+        echo "Address2: " . $xml->Address->Address2 . "\n";
+        echo "City: " . $xml->Address->City . "\n";
+        echo "State: " . $xml->Address->State . "\n";
+        echo "Zip5: " . $xml->Address->Zip5 . "\n";
+        }
+
+        
     ?>
 </body>
 </html>
