@@ -79,7 +79,7 @@
     <br><br>
 
     <label>ZIP</label><br><br>
-    <input type="state"/>
+    <input type="zip"/>
     <br><br>
 
     <input type="submit" name="submit" value="Submit"/>
@@ -89,19 +89,29 @@
         if(isset($_GET["submit"])){
             $address1 = $_Get["address1"];
             $address2 = $_Get["address2"];
+            $city = $_Get["city"];
+            $state = $_Get["state"];
+            $zip = $_Get["zip"];
         }
 
         $request_doc_template = <<<EOT
         <?xml version="1.0"?>
         <AddressValidateRequest USERID="812SYLIS7409">
             <Revision>1</Revision>
-            <Address ID=$address></Address1>
+            <Address ID="0">
+                <Address1>$address1</Address1>
+                <Address2>$address2</Address2>
+                <City>$city</City>
+                <State>$state</State>
+                <Zip5>$zip</Zip5>
+                <Zip4/>
+            </Address>
         </AddressValidateRequest>
         EOT;
 
         $doc_string = preg_replace('/[\t\n]/', '', $request_doc_template);
         $doc_string = urlencode($doc_string);
-        $url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=", $doc_string;
+        $url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=". $doc_string;
     ?>
 </body>
 </html>
