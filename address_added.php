@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Add Student</title>
+<title>Add Address</title>
 </head>
 <body>
 <?php
@@ -9,51 +9,26 @@ if(isset($_POST['submit'])){
      
     $data_missing = array();
      
-    if(empty($_POST['first_name'])){
+    if(empty($_POST['address_1'])){
  
-        // Adds name to array
-        $data_missing[] = 'First Name';
+        $data_missing[] = 'address_1';
  
     } else {
  
         // Trim white space from the name and store the name
-        $f_name = trim($_POST['first_name']);
+        $address_1 = trim($_POST['address_1']);
  
     }
  
-    if(empty($_POST['last_name'])){
+    if(empty($_POST['address_2'])){
  
         // Adds name to array
-        $data_missing[] = 'Last Name';
+        $data_missing[] = 'address_2';
  
     } else{
  
         // Trim white space from the name and store the name
-        $l_name = trim($_POST['last_name']);
- 
-    }
- 
-    if(empty($_POST['email'])){
- 
-        // Adds name to array
-        $data_missing[] = 'Email';
- 
-    } else {
- 
-        // Trim white space from the name and store the name
-        $email = trim($_POST['email']);
- 
-    }
- 
-    if(empty($_POST['street'])){
- 
-        // Adds name to array
-        $data_missing[] = 'Street';
- 
-    } else {
- 
-        // Trim white space from the name and store the name
-        $street = trim($_POST['street']);
+        $address_2 = trim($_POST['address_2']);
  
     }
  
@@ -93,76 +68,21 @@ if(isset($_POST['submit'])){
 
     }
 
-    if(empty($_POST['phone'])){
-
-        // Adds name to array
-
-        $data_missing[] = 'Phone Number';
-
-    } else {
-
-        // Trim white space from the name and store the name
-        $phone = trim($_POST['phone']);
-
-    }
-
-    if(empty($_POST['birth_date'])){
-
-    } else {
-
-        // Trim white space from the name and store the name
-        $b_date = trim($_POST['birth_date']);
-    }
-
-    if(empty($_POST['sex'])){
-
-        // Adds name to array
-
-        $data_missing[] = 'Sex';
-
-    } else {
-
-        // Trim white space from the name and store the name
-
-        $sex = trim($_POST['sex']);
-
-    }
-
-    if(empty($_POST['lunch'])){
-
-        // Adds name to array
-
-        $data_missing[] = 'Lunch Cost';
-
-    } else {
-
-        // Trim white space from the name and store the name
-
-        $lunch = trim($_POST['lunch']);
-
-    }
-
     if(empty($data_missing)){       
 
         require_once('../mysqli_connect.php');       
 
-        $query = "INSERT INTO students (first_name, last_name, email,
+        $query = "INSERT INTO addresses (address_1, address_2, city, state, zip) VALUES (?, ?, ?,
 
-        street, city, state, zip, phone, birth_date, sex, date_entered,
-
-        lunch_cost, student_id) VALUES (?, ?, ?,
-
-        ?, ?, ?, ?, ?, ?, ?, NOW(), ?, NULL)";
+        ?, ?)";
 
         $stmt = mysqli_prepare($dbc, $query);
 
-        mysqli_stmt_bind_param($stmt, "ssssssisssd", $f_name,
+        mysqli_stmt_bind_param($stmt, "ssssssisssd", $address_1,
 
-                               $l_name, $email, $street, $city,
+                               $address_2, $city,
 
-                               $state, $zip, $phone, $b_date,
-
-                               $sex, $lunch);
+                               $state, $zip);
 
         mysqli_stmt_execute($stmt);
 
@@ -170,7 +90,7 @@ if(isset($_POST['submit'])){
 
         if($affected_rows == 1){
 
-            echo 'Student Entered';
+            echo 'Address Entered';
 
             mysqli_stmt_close($stmt);
 
@@ -200,18 +120,12 @@ if(isset($_POST['submit'])){
 }
 ?>
 <form action="http://localhost/address_added.php" method="post">
-    <b>Add a New Student</b>
-    <p>First Name:
-<input type="text" name="first_name" size="30" value="" />
+    <b>Add a New Address</b>
+    <p>Address 1:
+<input type="text" name="address_1" size="30" value="" />
 </p>
-<p>Last Name:
-<input type="text" name="last_name" size="30" value="" />
-</p>
-<p>Email:
-<input type="text" name="email" size="30" value="" />
-</p>
-<p>Street:
-<input type="text" name="street" size="30" value="" />
+<p>Address 2:
+<input type="text" name="address_2" size="30" value="" />
 </p>
 <p>City:
 <input type="text" name="city" size="30" value="" />
@@ -221,19 +135,6 @@ if(isset($_POST['submit'])){
 </p>
 <p>Zip Code:
 <input type="text" name="zip" size="30" maxlength="5" value="" />
-</p>
-<p>Phone Number:
-<input type="text" name="phone" size="30" value="" />
-</p>
-
-<p>Birth Date (YYYY-MM-DD):
-<input type="text" name="birth_date" size="30" value="" />
-</p>
-<p>Sex (M or F):
-<input type="text" name="sex" size="30" maxlength="1" value="" />
-</p>
-<p>Lunch Cost:
-<input type="text" name="lunch" size="30" value="" />
 </p>
 <p>
     <input type="submit" name="submit" value="Send" />
