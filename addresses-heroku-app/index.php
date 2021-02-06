@@ -1,16 +1,20 @@
 <?php
 
+include 'route.php';
+
+echo 'Current PHP version: ' . phpversion();
+echo '<pre>';
 $route = new Router();
 $route->add('/address_added');
 $route->add('/get_address_info');
 
 print_r($route);
-echo '<pre>';
 
-/*function checkReponse($reponse)
+
+function checkReponse($reponse)
 {
     return true;
-}*/
+}
         if(isset($_POST["submit"])){
             $address1 = $_Get["address1"];
             $address2 = $_Get["address2"];
